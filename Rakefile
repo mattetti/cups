@@ -1,8 +1,5 @@
 # use https://github.com/luislavena/rake-compiler
 require 'rake/extensiontask'
-# use https://github.com/karottenreibe/rake-tester
-require 'rake/extensiontesttask'
-
 
 spec = Gem::Specification.new do |s|
   s.name = %q{cups}
@@ -14,6 +11,7 @@ spec = Gem::Specification.new do |s|
   s.description = <<-EOF
     Ruby CUPS provides a wrapper for the Common UNIX Printing System, allowing rubyists to perform basic tasks like printer discovery, job submission & querying.
   EOF
+  s.files = Dir.glob("{lib}/**/*")
   s.extensions = FileList["ext/**/extconf.rb"]
   s.homepage = "https://github.com/mattetti/cups"
   s.has_rdoc = true
@@ -24,6 +22,5 @@ end
 Gem::PackageTask.new(spec) do |pkg|
 end
 
-Rake::ExtensionTask.new('cups', spec) do |ext|
-  # ext.test_files = FileList['test/c/*']
-end
+# feed the ExtensionTask with your spec
+Rake::ExtensionTask.new('cups', spec)
